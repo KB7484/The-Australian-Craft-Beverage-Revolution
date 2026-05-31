@@ -1,0 +1,9 @@
+state,brewery_count_2020,brewery_count_2024,brewery_growth_pct,population_2020_thousands,population_2024_thousands,population_growth_pct,growth_ratio,brewery_source,population_source
+NSW,99,137,38.4,8166,8545,4.6,8.3,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+VIC,83,159,91.6,6681,7011,4.9,18.7,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+QLD,47,88,87.2,5184,5619,8.4,10.4,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+WA,20,62,210.0,2668,3009,12.8,16.4,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+SA,26,48,84.6,1771,1892,6.8,12.4,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+TAS,13,29,123.1,541,576,6.5,18.9,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+ACT,3,9,200.0,431,482,11.8,16.9,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0
+NT,3,5,66.7,246,262,6.5,10.3,IBA Industry Report June 2020; Brews News Database 2024,ABS National State Territory Population Cat 3101.0

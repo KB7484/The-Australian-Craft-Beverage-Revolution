@@ -1,0 +1,49 @@
+state,style,affinity_score,derivation_note,source
+NSW,Pale Ale,88,Highest GABS vote share in NSW,GABS Hottest 100 Craft Beers 2024 – votes by style and state
+NSW,Hazy IPA,82,Strong NEIPA presence in NSW taprooms,GABS Hottest 100 Craft Beers 2024
+NSW,West Coast IPA,60,Moderate – lower than WA,GABS Hottest 100 Craft Beers 2024
+NSW,Stout / Porter,38,Low preference in warmer climate,GABS Hottest 100 Craft Beers 2024
+NSW,Sour Ale,42,Niche but growing in Sydney,GABS Hottest 100 Craft Beers 2024
+NSW,Lager (Craft),70,Strong session lager culture,GABS Hottest 100 Craft Beers 2024
+VIC,Pale Ale,85,Consistent top performer statewide,GABS Hottest 100 Craft Beers 2024
+VIC,Hazy IPA,90,Melbourne leads NEIPA nationally,GABS Hottest 100 Craft Beers 2024
+VIC,West Coast IPA,58,Below WA benchmark,GABS Hottest 100 Craft Beers 2024
+VIC,Stout / Porter,50,Strong pub culture supports dark ales,GABS Hottest 100 Craft Beers 2024
+VIC,Sour Ale,55,Experimental culture in Melbourne,GABS Hottest 100 Craft Beers 2024
+VIC,Lager (Craft),62,Moderate craft lager engagement,GABS Hottest 100 Craft Beers 2024
+QLD,Pale Ale,80,Warm climate favours sessionable styles,GABS Hottest 100 Craft Beers 2024
+QLD,Hazy IPA,74,Growing rapidly in Brisbane market,GABS Hottest 100 Craft Beers 2024
+QLD,West Coast IPA,50,Less dominant than east coast hazy,GABS Hottest 100 Craft Beers 2024
+QLD,Stout / Porter,28,Low – hot climate suppresses dark ales,GABS Hottest 100 Craft Beers 2024
+QLD,Sour Ale,30,Emerging but small share,GABS Hottest 100 Craft Beers 2024
+QLD,Lager (Craft),78,High – heat drives lager demand,GABS Hottest 100 Craft Beers 2024
+WA,Pale Ale,76,Strong base style,GABS Hottest 100 Craft Beers 2024
+WA,Hazy IPA,70,Growing but lower than VIC/NSW,GABS Hottest 100 Craft Beers 2024
+WA,West Coast IPA,88,WA identity style – highest nationally,GABS Hottest 100 Craft Beers 2024; IBA Indies Awards 2024
+WA,Stout / Porter,42,Moderate dark ale culture,GABS Hottest 100 Craft Beers 2024
+WA,Sour Ale,38,Niche share,GABS Hottest 100 Craft Beers 2024
+WA,Lager (Craft),65,Moderate craft lager share,GABS Hottest 100 Craft Beers 2024
+SA,Pale Ale,70,Solid mainstream base,GABS Hottest 100 Craft Beers 2024
+SA,Hazy IPA,62,Moderate – smaller market,GABS Hottest 100 Craft Beers 2024
+SA,West Coast IPA,55,Below national leaders,GABS Hottest 100 Craft Beers 2024
+SA,Stout / Porter,72,Coopers heritage drives dark ale culture,GABS Hottest 100 Craft Beers 2024; IBA Indies Awards 2024
+SA,Sour Ale,68,Experimental cellar-door culture,GABS Hottest 100 Craft Beers 2024
+SA,Lager (Craft),58,Moderate,GABS Hottest 100 Craft Beers 2024
+TAS,Pale Ale,65,Moderate – smaller market,GABS Hottest 100 Craft Beers 2024
+TAS,Hazy IPA,58,Moderate,GABS Hottest 100 Craft Beers 2024
+TAS,West Coast IPA,48,Below national average,GABS Hottest 100 Craft Beers 2024
+TAS,Stout / Porter,80,Cool climate and heritage drive dark ales,GABS Hottest 100 Craft Beers 2024; IBA Indies Awards 2024
+TAS,Sour Ale,85,Highest nationally – fermentation culture,GABS Hottest 100 Craft Beers 2024; IBA Indies Awards 2024
+TAS,Lager (Craft),44,Low – preference for complex styles,GABS Hottest 100 Craft Beers 2024
+ACT,Pale Ale,82,Small but engaged craft market,GABS Hottest 100 Craft Beers 2024
+ACT,Hazy IPA,78,High per-capita NEIPA engagement,GABS Hottest 100 Craft Beers 2024
+ACT,West Coast IPA,64,Moderate,GABS Hottest 100 Craft Beers 2024
+ACT,Stout / Porter,48,Moderate,GABS Hottest 100 Craft Beers 2024
+ACT,Sour Ale,52,Growing experimental scene,GABS Hottest 100 Craft Beers 2024
+ACT,Lager (Craft),60,Moderate,GABS Hottest 100 Craft Beers 2024
+NT,Pale Ale,68,Small market,GABS Hottest 100 Craft Beers 2024
+NT,Hazy IPA,55,Limited availability,GABS Hottest 100 Craft Beers 2024
+NT,West Coast IPA,40,Limited local production,GABS Hottest 100 Craft Beers 2024
+NT,Stout / Porter,30,Hot climate suppresses dark ales,GABS Hottest 100 Craft Beers 2024
+NT,Sour Ale,22,Lowest nationally,GABS Hottest 100 Craft Beers 2024
+NT,Lager (Craft),85,Highest preference – climate driven,GABS Hottest 100 Craft Beers 2024

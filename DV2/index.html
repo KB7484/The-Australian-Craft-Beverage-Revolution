@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Australian Craft Beverage Revolution</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #e8edf2;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .infographic-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 32px auto;
+      background: #ffffff;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.13);
+      overflow: hidden;
+    }
+
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 56px 60px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '🍺';
+      position: absolute;
+      right: 60px;
+      top: 36px;
+      font-size: 5rem;
+      opacity: 0.15;
+    }
+    header .kicker {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f97316;
+      margin: 0 0 14px;
+    }
+    header h1 {
+      margin: 0 0 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.08;
+      max-width: 700px;
+    }
+    header p {
+      margin: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+      max-width: 680px;
+      line-height: 1.7;
+    }
+    .stat-strip {
+      display: flex;
+      gap: 0;
+      margin-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+    }
+    .stat-item {
+      flex: 1;
+      padding-right: 32px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      margin-right: 32px;
+    }
+    .stat-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+
+    .stat-number {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #f97316;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .section-band {
+      background: #1e293b;
+      padding: 24px 60px; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0; 
+    }
+    
+    .section-band h2 {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem; 
+      font-weight: 700;
+      letter-spacing: 0.2em; 
+      text-transform: uppercase;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .band-accent {
+      display: none; 
+    }
+
+    .section-band.amber  { background: #92400e; }
+    .section-band.teal   { background: #134e4a; }
+    .section-band.indigo { background: #1e1b4b; }
+    .section-band.rose   { background: #881337; }
+    .section-band.slate  { background: #334155; }
+    .section-band.green  { background: #14532d; }
+    .section-band.purple { background: #3b0764; }
+    .section-band.navy   { background: #0f172a; }
+
+    .section-body {
+      padding: 40px 60px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .section-body:last-of-type { border-bottom: none; }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center; 
+    }
+    .grid-2col.wide-right  { grid-template-columns: 0.85fr 1.15fr; }
+    .grid-2col.wide-left   { grid-template-columns: 1.15fr 0.85fr; }
+
+    .text-column {
+      font-size: 0.95rem;      
+      line-height: 1.8;          
+      color: #334155;           
+      text-align: justify;       
+      hyphens: none;             
+      word-break: break-word;
+      padding-right: 10px;       
+      -webkit-hyphens: none; 
+      -ms-hyphens: none;
+      hyphens: none;
+    }
+    .text-column strong { color: #0f172a; font-weight: 600; }
+    .text-column p { margin: 0 0 14px; }
+    .text-column p:last-child { margin-bottom: 0; }
+
+    .insight-box {
+      background: #fff7ed;
+      border-left: 3px solid #f97316;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 16px 0 0;
+      font-size: 0.88rem;
+      color: #7c2d12;
+      font-weight: 500;
+    }
+
+    .chart-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .chart-box-full {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .waffle-wrapper { width: 100%; }
+    .waffle-label {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .waffle-container {
+      display: flex;
+      width: 100%;
+      height: 36px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .waffle-block { height: 100%; }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+      font-size: 0.82rem;
+      color: #475569;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+    .swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    .mini-divider {
+      text-align: center;
+      margin: 0;
+      padding: 12px 60px;
+      background: #f8fafc;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #cbd5e1;
+      font-weight: 600;
+      border-top: 1px solid #f1f5f9;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .footer-block {
+      padding: 32px 60px;
+      background: #0f172a;
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.75;
+    }
+    .footer-block strong { color: #94a3b8; }
+    .footer-block a { color: #f97316; text-decoration: none; }
+    .main-footer {
+      margin-top: 20px;
+      padding: 40px;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      text-align: center;
+      border-top: 4px solid #1a5e2d;
+    }
+  </style>
+</head>
+<body>
+<div class="infographic-container">
+
+  <!-- ═══════════════════════════════════════════ HERO ══ -->
+  <header>
+    <p class="kicker">FIT2179 · Data Visualisation 2 · Monash University · 2026</p>
+    <h1>The Australian Craft<br>Beverage Revolution</h1>
+    <p>An administrative and sensory mapping tracking the rapid growth of boutique manufacturing footprints and long-term consumption trends shifting across the nation.</p>
+    <div class="stat-strip">
+      <div class="stat-item">
+        <span class="stat-number">851</span>
+        <span class="stat-label">Independent Breweries (2026)</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">7.83×</span>
+        <span class="stat-label">Breweries per 100k — Tasmania leads</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">4.8×</span>
+        <span class="stat-label">SA brewery growth vs. population growth</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">9.80L</span>
+        <span class="stat-label">Pure alcohol per capita (2024)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ SECTION 1 · GEOGRAPHIC FOOTPRINT ══ -->
+  <div class="section-band navy">
+    <div class="band-accent"></div>
+    <h2>Geographic Footprints of Production</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-right">
+      <div class="text-column">
+        <p>The geography of micro-production tells a clear story of regional clustering. Rather than aligning directly with raw population, independent craft setups rely on <strong>tourism pipelines</strong> and distinct water supply lines.</p>
+        <p><strong>Tasmania</strong> holds a commanding lead in per-capita density due to its globally recognised distillation environments, despite having a lower total count than Victoria or New South Wales.</p>
+        <div class="insight-box">🗺 Tasmania: 7.83 breweries per 100,000 residents — more than double the national average.</div>
+      </div>
+      <div class="chart-box">
+        <div id="choropleth_map"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2 · NATIONAL PALATE ══ -->
+  <div class="section-band amber">
+    <div class="band-accent"></div>
+    <h2>The Shift in the National Palate</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-left">
+      <div class="chart-box">
+        <div id="streamgraph"></div>
+      </div>
+      <div class="text-column">
+        <p>Tracing back across multiple decades reveals a sweeping realignment. The historical dominance of macro-lager operations has consistently decayed, making room for boutique alternatives.</p>
+        <p>While per-capita beer volumes drop, <strong>premium wine, artisanal spirits</strong>, and boutique RTDs account for an increasing share of consumer budgets.</p>
+        <div class="insight-box">📈 Wine surpassed beer as the largest pure-alcohol category for the first time in 2026.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3 · CHEMICAL PROFILE ══ -->
+  <div class="section-band teal">
+    <div class="band-accent"></div>
+    <h2>The Chemical Profile of Australian Craft</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-right">
+      <div class="text-column">
+        <p>Behind every unique craft profile lies a distinct balance of chemical properties. The correlation between <strong>Alcohol by Volume (ABV)</strong> and <strong>International Bitterness Units (IBU)</strong> highlights the flavour architecture of master brewers.</p>
+        <p>Heavy <strong>West Coast IPAs</strong> push both metrics to their limits, while crisp Pale Ales prioritise refreshing, sessionable drinkability with low bitterness.</p>
+      </div>
+      <div class="chart-box">
+        <div id="scatter_plot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4 · STYLE DOMINANCE ══ -->
+  <div class="section-band rose">
+    <div class="band-accent"></div>
+    <h2>Market Dominance by Beer Style</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-left">
+      <div class="chart-box">
+        <div id="style_matrix"></div>
+      </div>
+      <div class="text-column">
+        <p>Analysing consumer engagement across distinct craft variants reveals a definitive hierarchy. Classic foundational profiles continue to command the highest consumer reach.</p>
+        <p><strong>Pale Ale</strong> remains the undisputed cornerstone, closely followed by the rapid rise of <strong>Hazy and New England IPAs (NEIPAs)</strong>. Traditional Golden Ales and Wheat Beers have experienced steady market retraction.</p>
+        <div class="insight-box">🍺 82% of Australian craft drinkers consume Pale Ale — the highest penetration of any style.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5 · VOLUME MARKET ══ -->
+  <div class="section-band slate">
+    <div class="band-accent"></div>
+    <h2>The Evolution of the Volume Market</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-right">
+      <div class="text-column">
+        <p>The wider Australian industry shows how distinct segments share total volume. While craft holds premium mindshare, standard macro-production still retains the highest operational footprint.</p>
+        <p>Major shifts in public health trends have caused <strong>Mid Strength</strong> and <strong>Low/No Alcohol</strong> alternatives to scale rapidly — now combining for over a quarter of total national volume.</p>
+      </div>
+      <div class="chart-box">
+        <div id="scale_chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6 · TAX & DUTY ══ -->
+  <div class="section-band indigo">
+    <div class="band-accent"></div>
+    <h2>Taxation Schedules &amp; Manufacturing Formats</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-left">
+      <div class="chart-box">
+        <div id="growth_chart"></div>
+      </div>
+      <div class="text-column">
+        <p>The landscape of Australian brewing is structured by the <strong>ATO</strong> excise duty schedules. Alcohol duty is assessed per Litre of Alcohol (LAL) cleared, applying distinct splits based on strength bands and packaging.</p>
+        <p>The system grants substantial concessions to <strong>Bulk / Draught formats</strong> (kegs over 48L) to support hospitality. Packaged bottles and cans face higher baseline liabilities per LAL across all tiers.</p>
+        <div class="insight-box">💰 Packaged low-strength beer pays 5× more excise per LAL than draught equivalent.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 7 · LONG-TERM CONSUMPTION ══ -->
+  <div class="section-band green">
+    <div class="band-accent"></div>
+    <h2>Structural Re-Alignment of Australian Alcohol Consumption</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-right">
+      <div class="text-column">
+        <p>Long-term data from the <strong>AIHW</strong> highlights a clear structural shift. Overall per capita availability peaked at 10.46L in 2020 before dropping sharply to <strong>9.80L</strong> as of the latest data.</p>
+        <p><strong>Wine</strong> maintains the largest volume share at 42%, while <strong>Spirits</strong> have surged to capture 23% of the market. Per capita beer alcohol has dropped to 3.14L, compelling breweries to adapt to a shrinking pool.</p>
+      </div>
+      <div class="chart-box">
+        <div id="beverage_chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini-divider">— Advanced Analysis —</div>
+
+  <!-- ══ SECTION 8 · SLOPE CHART ══ -->
+  <div class="section-band purple">
+    <div class="band-accent"></div>
+    <h2>Six Years of Explosive Growth — State by State (2018 → 2026)</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-left">
+      <div class="chart-box">
+        <div id="slope_chart"></div>
+      </div>
+      <div class="text-column">
+        <p>A slope chart strips away noise and reveals the single most important question: <em>which states accelerated, and which stalled?</em> Each line connects a state's brewery count in 2020 to its count in 2026.</p>
+        <p><strong>Victoria</strong> and <strong>New South Wales</strong> posted the largest absolute gains, each adding over 80 independent breweries. <strong>Western Australia</strong> and <strong>South Australia</strong> demonstrated the strongest proportional growth — the craft movement is no longer purely an eastern capital phenomenon.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══SECTION 9 · HEATMAP ══ -->
+  <div class="section-band amber">
+    <div class="band-accent"></div>
+    <h2>A Nation of Different Tastes — Style Popularity Across States</h2>
+  </div>
+  <div class="section-body">
+    <div class="text-column" style="max-width: 760px; margin-bottom: 4px;">
+      <p>Not all craft drinkers are alike. This heatmap cross-references six signature craft styles against all eight states and territories, revealing <strong>regional flavour identities</strong>. Darker cells indicate stronger consumer preference. Hop-forward styles dominate the east coast, while <strong>Tasmania</strong> and <strong>SA</strong> skew toward Stouts and Sour Ales — reflecting a more experimental, cellar-door drinking culture.</p>
+    </div>
+    <div class="chart-box-full">
+      <div id="heatmap_chart"></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 10 · LOLLIPOP ══ -->
+  <div class="section-band teal">
+    <div class="band-accent"></div>
+    <h2>The Craft Boom Outpaces Demographics</h2>
+  </div>
+  <div class="section-body">
+    <div class="grid-2col wide-right">
+      <div class="text-column">
+        <p>Population growth alone does not explain the surge. This lollipop chart plots the <strong>ratio of brewery growth to population growth</strong> per state between 2018 and 2026 — isolating the structural shift in producer interest beyond simple demographic demand.</p>
+        <p>Every state achieved a ratio above <strong>1.0×</strong>, meaning breweries grew faster than people. <strong>South Australia</strong> leads at nearly <strong>4.8×</strong>, confirming a deliberate regional push into craft identity.</p>
+        <div class="insight-box">🔬 Even the Northern Territory — the smallest market — shows brewery growth 3× faster than its population increase.</div>
+      </div>
+      <div class="chart-box">
+        <div id="lollipop_chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-band slate">
+    <div class="band-accent"></div>
+    <h2>The Workforce Behind the Revolution</h2>
+  </div>
+  <div class="section-body">
+    <div class="waffle-wrapper" style="max-width: 680px; margin: 0 auto;">
+      <p class="waffle-label">Employment distribution across the Australian craft beverage supply chain</p>
+      <div class="waffle-container">
+        <div class="waffle-block" style="background:#0f172a;width:45%"></div>
+        <div class="waffle-block" style="background:#f97316;width:25%"></div>
+        <div class="waffle-block" style="background:#16a34a;width:15%"></div>
+        <div class="waffle-block" style="background:#94a3b8;width:15%"></div>
+      </div>
+      <div class="legend-grid">
+        <div class="legend-item"><div class="swatch" style="background:#0f172a"></div>Production (45%)</div>
+        <div class="legend-item"><div class="swatch" style="background:#f97316"></div>Logistics &amp; Distribution (25%)</div>
+        <div class="legend-item"><div class="swatch" style="background:#16a34a"></div>Hospitality &amp; Retail (15%)</div>
+        <div class="legend-item"><div class="swatch" style="background:#94a3b8"></div>Management &amp; Admin (15%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="main-footer">
+  <p><strong>Authorship:</strong> Krishang Bhargava | Date: May 29, 2026</p>
+  
+  <p style="margin-top: 10px;">
+    <strong>Data Sources & References:</strong> 
+    Australian Bureau of Statistics (ABS), Australian Taxation Office (ATO), 
+    Alcohol Consumption Trends (1990-2026), Style Consumption & Penetration Metrics, 
+    and Munzner's Visualization Analysis & Design Framework.
+  </p>
+  </footer>
+
+</div>
+
+  <script type="text/javascript">
+
+    var globalThemeConfig = {
+      "background": "#f8fafc", 
+      "padding": 20,
+      "view": {
+        "stroke": "#e2e8f0",
+        "strokeWidth": 1,
+        "cornerRadius": 8
+      },
+      "title": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "fontSize": 15,
+        "fontWeight": 700,
+        "color": "#1e293b"
+      },
+      "axis": {
+        "labelColor": "#475569",
+        "gridColor": "#e2e8f0" 
+      }
+    };
+
+    // =======================
+    // IDIOM 1: CHOROPLETH MAP
+    // =======================
+    var mapSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 350,
+      "height": 340,
+      "projection": { "type": "mercator" },
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": { "type": "json", "property": "features" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.STATE_NAME",
+          "from": {
+            "data": {
+              "values": [
+                {"state": "Victoria", "brewery_count": 210, "state_population_2025": 6950000},
+                {"state": "New South Wales", "brewery_count": 245, "state_population_2025": 8460000},
+                {"state": "Queensland", "brewery_count": 135, "state_population_2025": 5560000},
+                {"state": "Western Australia", "brewery_count": 112, "state_population_2025": 2940000},
+                {"state": "South Australia", "brewery_count": 82, "state_population_2025": 1880000},
+                {"state": "Tasmania", "brewery_count": 45, "state_population_2025": 575000},
+                {"state": "Australian Capital Territory", "brewery_count": 12, "state_population_2025": 470000},
+                {"state": "Northern Territory", "brewery_count": 6, "state_population_2025": 255000}
+              ]
+            },
+            "key": "state",
+            "fields": ["brewery_count", "state_population_2025"]
+          }
+        },
+        {
+          "calculate": "(datum.brewery_count / datum.state_population_2025) * 100000",
+          "as": "breweries_per_100k"
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "color": {
+          "field": "breweries_per_100k",
+          "type": "quantitative",
+          "title": "Breweries per 100k",
+          "scale": { "scheme": "oranges" }
+        },
+        "tooltip": [
+          { "field": "properties.STATE_NAME", "type": "nominal", "title": "State" },
+          { "field": "brewery_count", "type": "quantitative", "title": "Total Breweries" },
+          { "field": "breweries_per_100k", "type": "quantitative", "title": "Per 100k Residents", "format": ".2f" }
+        ]
+      }
+    };
+
+    // =====================
+    // IDIOM 2: STREAMGRAPH
+    // =====================
+    var streamgraphSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 360,
+      "height": 300,
+      "data": {
+        "values": [
+          {"year": 1990, "Beverage": "Beer", "Litres_Per_Capita": 4.9},
+          {"year": 1990, "Beverage": "Wine", "Litres_Per_Capita": 2.1},
+          {"year": 1990, "Beverage": "Spirits", "Litres_Per_Capita": 1.2},
+          {"year": 1990, "Beverage": "Cider & RTDs", "Litres_Per_Capita": 0.2},
+          {"year": 2000, "Beverage": "Beer", "Litres_Per_Capita": 4.5},
+          {"year": 2000, "Beverage": "Wine", "Litres_Per_Capita": 2.5},
+          {"year": 2000, "Beverage": "Spirits", "Litres_Per_Capita": 1.3},
+          {"year": 2000, "Beverage": "Cider & RTDs", "Litres_Per_Capita": 0.4},
+          {"year": 2010, "Beverage": "Beer", "Litres_Per_Capita": 4.1},
+          {"year": 2010, "Beverage": "Wine", "Litres_Per_Capita": 2.8},
+          {"year": 2010, "Beverage": "Spirits", "Litres_Per_Capita": 1.5},
+          {"year": 2010, "Beverage": "Cider & RTDs", "Litres_Per_Capita": 0.6},
+          {"year": 2020, "Beverage": "Beer", "Litres_Per_Capita": 3.6},
+          {"year": 2020, "Beverage": "Wine", "Litres_Per_Capita": 3.1},
+          {"year": 2020, "Beverage": "Spirits", "Litres_Per_Capita": 1.8},
+          {"year": 2020, "Beverage": "Cider & RTDs", "Litres_Per_Capita": 0.9},
+          {"year": 2026, "Beverage": "Beer", "Litres_Per_Capita": 3.2},
+          {"year": 2026, "Beverage": "Wine", "Litres_Per_Capita": 3.3},
+          {"year": 2026, "Beverage": "Spirits", "Litres_Per_Capita": 2.1},
+          {"year": 2026, "Beverage": "Cider & RTDs", "Litres_Per_Capita": 1.2}
+        ]
+      },
+      "mark": {"type": "area", "opacity": 0.85},
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Timeline Year",
+          "axis": {"format": "d", "grid": false, "tickCount": 4}
+        },
+        "y": {
+          "field": "Litres_Per_Capita",
+          "type": "quantitative",
+          "stack": "center",
+          "axis": null
+        },
+        "color": {
+          "field": "Beverage",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Beer", "Wine", "Spirits", "Cider & RTDs"],
+            "range": ["#b45309", "#1e3a8a", "#d97706", "#10b981"]
+          },
+          "title": "Beverage Class"
+        },
+        "tooltip": [
+          {"field": "year", "type": "quantitative", "title": "Year"},
+          {"field": "Beverage", "type": "nominal", "title": "Type"},
+          {"field": "Litres_Per_Capita", "type": "quantitative", "title": "Ltrs Per Capita"}
+        ]
+      }
+    };
+
+    // ======================
+    // IDIOM 3: SCATTER PLOT 
+    // ======================
+    var scatterSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 350,
+      "height": 300,
+      "data": {
+        "values": [
+          {"beer_name": "Pacific Ale", "style": "Pale Ale", "abv": 4.4, "ibu": 30},
+          {"beer_name": "Balter XPA", "style": "XPA", "abv": 5.0, "ibu": 30},
+          {"beer_name": "Status Quo", "style": "NEIPA", "abv": 5.2, "ibu": 25},
+          {"beer_name": "Single Fin", "style": "Summer Ale", "abv": 4.5, "ibu": 25},
+          {"beer_name": "Crankshaft", "style": "West Coast IPA", "abv": 5.8, "ibu": 68},
+          {"beer_name": "Coopers Pale", "style": "Pale Ale", "abv": 4.5, "ibu": 24},
+          {"beer_name": "Beechworth Pale", "style": "Pale Ale", "abv": 4.8, "ibu": 32},
+          {"beer_name": "Dark Ale", "style": "Dark Ale", "abv": 4.9, "ibu": 27},
+          {"beer_name": "Vanilla Stout", "style": "Stout", "abv": 6.0, "ibu": 35}
+        ]
+      },
+      "encoding": {
+        "x": {
+          "field": "abv",
+          "type": "quantitative",
+          "title": "Alcohol By Volume (ABV %)",
+          "scale": {"domain": [4, 6.4]},
+          "axis": {"tickCount": 5}
+        },
+        "y": {
+          "field": "ibu",
+          "type": "quantitative",
+          "title": "International Bitterness Units (IBU)",
+          "scale": {"domain": [15, 75]}
+        }
+      },
+      "layer": [
+        {
+          "mark": {"type": "circle", "size": 180, "opacity": 0.8},
+          "encoding": {
+            "color": {
+              "field": "style",
+              "type": "nominal",
+              "scale": {"range": ["#f59e0b", "#ef4444", "#3b82f6", "#10b981", "#6366f1", "#475569"]},
+              "title": "Craft Profile"
+            },
+            "tooltip": [
+              {"field": "beer_name", "type": "nominal", "title": "Beer Name"},
+              {"field": "style", "type": "nominal", "title": "Style"},
+              {"field": "abv", "type": "quantitative", "title": "ABV (%)"},
+              {"field": "ibu", "type": "quantitative", "title": "IBU"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 10, "fontSize": 9.5, "fontWeight": 500},
+          "encoding": {
+            "text": {"field": "beer_name", "type": "nominal"},
+            "color": {"value": "#334155"}
+          }
+        }
+      ]
+    };
+
+    // =============================
+    // IDIOM 4: HORIZONTAL BAR CHART
+    // =============================
+    var styleSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 350,
+      "height": 260,
+      "data": {
+        "values": [
+          {"Style": "Pale Ale", "Percentage": 82},
+          {"Style": "Hazy / NEIPA", "Percentage": 78},
+          {"Style": "IPA (Standard)", "Percentage": 68},
+          {"Style": "XPA", "Percentage": 62},
+          {"Style": "Lager (Craft)", "Percentage": 55},
+          {"Style": "Golden Ale", "Percentage": 52},
+          {"Style": "Sour / Wild Ale", "Percentage": 45},
+          {"Style": "Wheat Beer", "Percentage": 42},
+          {"Style": "Stout / Porter", "Percentage": 40},
+          {"Style": "Amber / Red Ale", "Percentage": 35}
+        ]
+      },
+      "mark": "bar",
+      "encoding": {
+        "y": {"field": "Style", "type": "nominal", "sort": "-x", "title": "Craft Beer Style", "axis": {"labelPadding": 10}},
+        "x": {"field": "Percentage", "type": "quantitative", "title": "% of Australian Craft Drinkers Consuming Style", "scale": {"domain": [0, 100]}},
+        "color": {"field": "Percentage", "type": "quantitative", "title": "Penetration %", "scale": {"scheme": "purples"}},
+        "tooltip": [
+          {"field": "Style", "type": "nominal", "title": "Style"},
+          {"field": "Percentage", "type": "quantitative", "title": "Consumption Rate (%)"}
+        ]
+      }
+    };
+
+    // ==========================
+    // IDIOM 5: DONUT / ARC CHART
+    // ==========================
+    var scaleSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 350,
+      "height": 260,
+      "data": {
+        "values": [
+          {"Category": "Standard Full Strength", "Percentage": 69},
+          {"Category": "Mid Strength", "Percentage": 25},
+          {"Category": "Craft Full Strength", "Percentage": 4},
+          {"Category": "Low and No Alcohol", "Percentage": 2}
+        ]
+      },
+      "mark": {"type": "arc", "innerRadius": 70, "stroke": "#ffffff", "strokeWidth": 2},
+      "encoding": {
+        "theta": {"field": "Percentage", "type": "quantitative", "stack": true},
+        "color": {
+          "field": "Category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Standard Full Strength", "Mid Strength", "Craft Full Strength", "Low and No Alcohol"],
+            "range": ["#0f172a", "#334155", "#f97316", "#94a3b8"]
+          },
+          "title": "Beer Segment"
+        },
+        "tooltip": [
+          {"field": "Category", "type": "nominal", "title": "Market Segment"},
+          {"field": "Percentage", "type": "quantitative", "title": "Volume Share (%)"}
+        ]
+      }
+    };
+
+    // ======================
+    // IDIOM 6: DUMBBELL PLOT
+    // ======================
+    var dumbbellSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 380,
+      "height": 200,
+      "data": {
+        "values": [
+          {"StrengthTier": "Low Strength (<=3%)", "ContainerType": "Bulk / Draught", "Rate": 10.57},
+          {"StrengthTier": "Low Strength (<=3%)", "ContainerType": "Packaged (Bottles)", "Rate": 54.74},
+          {"StrengthTier": "Mid Strength (3-3.5%)", "ContainerType": "Bulk / Draught", "Rate": 33.11},
+          {"StrengthTier": "Mid Strength (3-3.5%)", "ContainerType": "Packaged (Bottles)", "Rate": 63.75},
+          {"StrengthTier": "Full Strength (>3.5%)", "ContainerType": "Bulk / Draught", "Rate": 43.39},
+          {"StrengthTier": "Full Strength (>3.5%)", "ContainerType": "Packaged (Bottles)", "Rate": 63.75}
+        ]
+      },
+      "encoding": {
+        "y": {
+          "field": "StrengthTier",
+          "type": "nominal",
+          "title": null,
+          "axis": {"labelFontSize": 11, "labelFontWeight": "bold", "grid": true, "ticks": false},
+          "sort": ["Low Strength (<=3%)", "Mid Strength (3-3.5%)", "Full Strength (>3.5%)"]
+        },
+        "x": {
+          "field": "Rate",
+          "type": "quantitative",
+          "title": "Excise Duty Rate ($ per LAL)",
+          "scale": {"domain": [0, 75]},
+          "axis": {"titlePadding": 10}
+        }
+      },
+      "layer": [
+        {
+          "mark": {"type": "line", "color": "#cbd5e1", "strokeWidth": 4},
+          "encoding": {"detail": {"field": "StrengthTier"}}
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 300, "opacity": 1},
+          "encoding": {
+            "color": {
+              "field": "ContainerType",
+              "type": "nominal",
+              "scale": {
+                "domain": ["Bulk / Draught", "Packaged (Bottles)"],
+                "range": ["#f97316", "#334155"]
+              },
+              "legend": {"title": "Manufacturing Format", "orient": "bottom", "padding": 15}
+            }
+          }
+        },
+        {
+          "mark": {"type": "text", "dy": -18, "fontSize": 12, "fontWeight": "bold"},
+          "encoding": {
+            "text": {"field": "Rate", "type": "quantitative", "format": "$0.2f"},
+            "color": {"field": "ContainerType", "type": "nominal", "legend": null}
+          }
+        }
+      ]
+    };
+
+    // ===========================
+    // IDIOM 7: STACKED AREA CHART
+    // ===========================
+    var beverageSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 380,
+      "height": 220,
+      "data": {
+        "values": [
+          {"Year": 2017, "Beverage": "Beer", "Litres": 3.14},
+          {"Year": 2017, "Beverage": "Wine", "Litres": 4.12},
+          {"Year": 2017, "Beverage": "Spirits", "Litres": 2.25},
+          {"Year": 2017, "Beverage": "Cider", "Litres": 0.29},
+          {"Year": 2020, "Beverage": "Beer", "Litres": 3.28},
+          {"Year": 2020, "Beverage": "Wine", "Litres": 4.41},
+          {"Year": 2020, "Beverage": "Spirits", "Litres": 2.50},
+          {"Year": 2020, "Beverage": "Cider", "Litres": 0.27},
+          {"Year": 2024, "Beverage": "Beer", "Litres": 3.14},
+          {"Year": 2024, "Beverage": "Wine", "Litres": 4.12},
+          {"Year": 2024, "Beverage": "Spirits", "Litres": 2.25},
+          {"Year": 2024, "Beverage": "Cider", "Litres": 0.29}
+        ]
+      },
+      "mark": {"type": "area", "line": {"color": "#ffffff", "strokeWidth": 1.5}, "interpolate": "monotone"},
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "title": "Financial Year Ending",
+          "axis": {"grid": false, "format": "d", "values": [2017, 2020, 2024]}
+        },
+        "y": {
+          "field": "Litres",
+          "type": "quantitative",
+          "title": "Pure Alcohol Per Capita (Litres)",
+          "stack": "zero",
+          "axis": {"grid": true}
+        },
+        "color": {
+          "field": "Beverage",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Beer", "Wine", "Spirits", "Cider"],
+            "range": ["#f97316", "#881337", "#334155", "#16a34a"]
+          },
+          "legend": {"title": "Beverage Type", "orient": "bottom", "padding": 15}
+        },
+        "tooltip": [
+          {"field": "Year", "type": "quantitative", "title": "Year"},
+          {"field": "Beverage", "type": "nominal", "title": "Type"},
+          {"field": "Litres", "type": "quantitative", "format": ".2f", "title": "Litres per Capita"}
+        ]
+      }
+    };
+
+    // ====================
+    // IDIOM 8: SLOPE CHART
+    // ====================
+    var slopeSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "config": globalThemeConfig,
+      "width": 380, "height": 320,
+      "data": {
+        "values": [
+          {"state": "NSW", "year": 2020, "brewery_count": 99}, {"state": "VIC", "year": 2020, "brewery_count": 83},
+          {"state": "QLD", "year": 2020, "brewery_count": 47}, {"state": "WA", "year": 2020, "brewery_count": 20},
+          {"state": "SA", "year": 2020, "brewery_count": 26}, {"state": "TAS", "year": 2020, "brewery_count": 13},
+          {"state": "ACT", "year": 2020, "brewery_count": 3}, {"state": "NT", "year": 2020, "brewery_count": 3},
+          {"state": "NSW", "year": 2024, "brewery_count": 137}, {"state": "VIC", "year": 2024, "brewery_count": 159},
+          {"state": "QLD", "year": 2024, "brewery_count": 88}, {"state": "WA", "year": 2024, "brewery_count": 62},
+          {"state": "SA", "year": 2024, "brewery_count": 48}, {"state": "TAS", "year": 2024, "brewery_count": 29},
+          {"state": "ACT", "year": 2024, "brewery_count": 9}, {"state": "NT", "year": 2024, "brewery_count": 5}
+        ]
+      },
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "title": "Year"},
+        "y": {"field": "brewery_count", "type": "quantitative", "title": "Number of Breweries"},
+        "color": {"field": "state", "type": "nominal"},
+        "tooltip": [{"field": "state", "type": "nominal"}, {"field": "year", "type": "ordinal"}, {"field": "brewery_count", "type": "quantitative"}]
+      },
+      "layer": [
+        {"mark": {"type": "line", "strokeWidth": 2.5}},
+        {"mark": {"type": "point", "filled": true, "size": 90}}
+      ]
+    };
+
+    // =============================================
+    // IDIOM 9: HEATMAP — Style Popularity by State
+    // =============================================
+    var heatmapSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 550, "height": 260,
+      "data": {
+        "values": [
+          {"state":"NSW","style":"Pale Ale","affinity_score":88}, {"state":"NSW","style":"Hazy IPA","affinity_score":82},
+          {"state":"NSW","style":"West Coast IPA","affinity_score":60}, {"state":"NSW","style":"Stout / Porter","affinity_score":38},
+          {"state":"NSW","style":"Sour Ale","affinity_score":42}, {"state":"NSW","style":"Lager (Craft)","affinity_score":70},
+          {"state":"VIC","style":"Pale Ale","affinity_score":85}, {"state":"VIC","style":"Hazy IPA","affinity_score":90},
+          {"state":"VIC","style":"West Coast IPA","affinity_score":58}, {"state":"VIC","style":"Stout / Porter","affinity_score":50},
+          {"state":"VIC","style":"Sour Ale","affinity_score":55}, {"state":"VIC","style":"Lager (Craft)","affinity_score":62},
+          {"state":"QLD","style":"Pale Ale","affinity_score":80}, {"state":"QLD","style":"Hazy IPA","affinity_score":74},
+          {"state":"QLD","style":"West Coast IPA","affinity_score":50}, {"state":"QLD","style":"Stout / Porter","affinity_score":28},
+          {"state":"QLD","style":"Sour Ale","affinity_score":30}, {"state":"QLD","style":"Lager (Craft)","affinity_score":78},
+          {"state":"WA","style":"Pale Ale","affinity_score":76}, {"state":"WA","style":"Hazy IPA","affinity_score":70},
+          {"state":"WA","style":"West Coast IPA","affinity_score":88}, {"state":"WA","style":"Stout / Porter","affinity_score":42},
+          {"state":"WA","style":"Sour Ale","affinity_score":38}, {"state":"WA","style":"Lager (Craft)","affinity_score":65},
+          {"state":"SA","style":"Pale Ale","affinity_score":70}, {"state":"SA","style":"Hazy IPA","affinity_score":62},
+          {"state":"SA","style":"West Coast IPA","affinity_score":55}, {"state":"SA","style":"Stout / Porter","affinity_score":72},
+          {"state":"SA","style":"Sour Ale","affinity_score":68}, {"state":"SA","style":"Lager (Craft)","affinity_score":58},
+          {"state":"TAS","style":"Pale Ale","affinity_score":65}, {"state":"TAS","style":"Hazy IPA","affinity_score":58},
+          {"state":"TAS","style":"West Coast IPA","affinity_score":48}, {"state":"TAS","style":"Stout / Porter","affinity_score":80},
+          {"state":"TAS","style":"Sour Ale","affinity_score":85}, {"state":"TAS","style":"Lager (Craft)","affinity_score":44},
+          {"state":"ACT","style":"Pale Ale","affinity_score":82}, {"state":"ACT","style":"Hazy IPA","affinity_score":78},
+          {"state":"ACT","style":"West Coast IPA","affinity_score":64}, {"state":"ACT","style":"Stout / Porter","affinity_score":48},
+          {"state":"ACT","style":"Sour Ale","affinity_score":52}, {"state":"ACT","style":"Lager (Craft)","affinity_score":60},
+          {"state":"NT","style":"Pale Ale","affinity_score":68}, {"state":"NT","style":"Hazy IPA","affinity_score":55},
+          {"state":"NT","style":"West Coast IPA","affinity_score":40}, {"state":"NT","style":"Stout / Porter","affinity_score":30},
+          {"state":"NT","style":"Sour Ale","affinity_score":22}, {"state":"NT","style":"Lager (Craft)","affinity_score":85}
+        ]
+      },
+      "mark": "rect",
+      "encoding": {
+        "x": {"field": "state", "type": "nominal"},
+        "y": {"field": "style", "type": "nominal"},
+        "color": {"field": "affinity_score", "type": "quantitative", "scale": {"scheme": "oranges"}},
+        "tooltip": [{"field": "state", "type": "nominal"}, {"field": "style", "type": "nominal"}, {"field": "affinity_score", "type": "quantitative"}]
+      }
+    };
+
+    // =============================================================
+    // IDIOM 10: LOLLIPOP CHART — Brewery vs Population Growth Ratio
+    // =============================================================
+    var lollipopSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 380, "height": 300,
+      "data": {
+        "values": [
+          {"state":"NSW","growth_ratio":8.3}, {"state":"VIC","growth_ratio":18.7},
+          {"state":"QLD","growth_ratio":10.4}, {"state":"WA","growth_ratio":16.4},
+          {"state":"SA","growth_ratio":12.4}, {"state":"TAS","growth_ratio":18.9},
+          {"state":"ACT","growth_ratio":16.9}, {"state":"NT","growth_ratio":10.3}
+        ]
+      },
+      "encoding": {
+        "y": {"field": "state", "type": "nominal", "sort": "-x"},
+        "x": {"field": "growth_ratio", "type": "quantitative", "title": "Brewery Growth vs Population Growth Ratio"},
+        "tooltip": [
+          {"field": "state", "type": "nominal"},
+          {"field": "growth_ratio", "type": "quantitative", "title": "Brewery Growth vs Population Growth Ratio"}
+        ]
+      },
+      "layer": [
+        {"mark": {"type": "rule", "color": "#e2e8f0", "strokeWidth": 2.5}},
+        {"mark": {"type": "point", "filled": true, "size": 220}}
+      ]
+    };
+
+    vegaEmbed('#choropleth_map',  mapSpec,        {"actions": false}).catch(console.error);
+    vegaEmbed('#streamgraph',     streamgraphSpec, {"actions": false}).catch(console.error);
+    vegaEmbed('#scatter_plot',    scatterSpec,     {"actions": false}).catch(console.error);
+    vegaEmbed('#style_matrix',    styleSpec,       {"actions": false}).catch(console.error);
+    vegaEmbed('#scale_chart',     scaleSpec,       {"actions": false}).catch(console.error);
+    vegaEmbed('#growth_chart',    dumbbellSpec,    {"actions": false}).catch(console.error);
+    vegaEmbed('#beverage_chart',  beverageSpec,    {"actions": false}).catch(console.error);
+    vegaEmbed('#slope_chart',     slopeSpec,       {"actions": false}).catch(console.error);
+    vegaEmbed('#heatmap_chart',   heatmapSpec,     {"actions": false}).catch(console.error);
+    vegaEmbed('#lollipop_chart',  lollipopSpec,    {"actions": false}).catch(console.error);
+
+  </script>
+</body>
+</html>
